@@ -1,0 +1,41 @@
+{
+  "name": "telegram-flies",
+  "description": "Upload files to Telegram using a bot token",
+  "version": "1.0.0",
+  "author": "RyogiMutsuki",
+  "type": "module",
+  "exports": {
+    ".": "./dist/index.cjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "bundle": "npm run package",
+    "local-action": "npx @github/local-action . src/main.ts .env",
+    "package": "npx rollup --config rollup.config.ts --configPlugin @rollup/plugin-typescript",
+    "package:watch": "npm run package -- --watch",
+    "all": "npm run package"
+  },
+  "dependencies": {
+    "@actions/core": "^1.11.1",
+    "glob": "^11.0.3",
+    "node-telegram-bot-api": "^0.66.0"
+  },
+  "devDependencies": {
+    "@github/local-action": "^5.2.0",
+    "@rollup/plugin-commonjs": "^28.0.6",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "@rollup/plugin-typescript": "^12.1.4",
+    "@types/node": "^20.19.11",
+    "@types/node-telegram-bot-api": "^0.64.10",
+    "make-coverage-badge": "^1.2.0",
+    "rollup": "^4.50.0",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2"
+  },
+  "optionalDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "^4.50.0"
+  }
+}

@@ -1,0 +1,41 @@
+name: Telegram Files Action
+description: Upload files to Telegram using a bot token
+author: nyaruta
+
+# Add your action's branding here. This will appear on the GitHub Marketplace.
+branding:
+  icon: 'upload-cloud'
+  color: 'green'
+
+# Define your inputs here.
+inputs:
+  token:
+    description: 'Your Telegram bot token'
+    required: true
+
+  chat-id:
+    description: 'Your Telegram chat ID'
+    required: true
+
+  body:
+    description: 'The message body'
+    required: false
+
+  files:
+    description: 'The list of file paths to upload, one file per line.'
+    required: true
+
+  api-url:
+    description:
+      'The Telegram API URL to use. Defaults to https://api.telegram.org'
+    required: false
+    default: 'https://api.telegram.org'
+  
+  mime:
+    description: 'The MIME type of the files being uploaded (e.g., application/json, image/png).'
+    required: false
+    default: 'application/octet-stream'
+
+runs:
+  using: node20
+  main: dist/index.cjs
