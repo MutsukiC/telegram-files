@@ -1,6 +1,6 @@
 import * as core from '@actions/core'
 import TelegramBot from 'node-telegram-bot-api'
-import * as fs from 'fs'
+import { env } from 'node:process'
 import { glob } from 'glob'
 
 export async function run(): Promise<void> {
@@ -10,7 +10,6 @@ export async function run(): Promise<void> {
     const message = core.getInput('body')
     const documentsInput = core.getInput('files') // Input with patterns
     const apiUrl = core.getInput('api-url')
-    const mimeType = core.getInput('mime')
 
     // Split the input string by newlines, trim whitespace, and filter empty lines
     const patterns = documentsInput
@@ -26,7 +25,7 @@ export async function run(): Promise<void> {
       if (matches.length > 0) {
         documentPaths = documentPaths.concat(matches)
       } else {
-        core.warning(`No files found for pattern: ${pattern}`)
+        throw Error(`No files found for pattern: ${pattern}`) // Stop execution if no files found
       }
     })
 
@@ -34,8 +33,7 @@ export async function run(): Promise<void> {
 
     const bot = new TelegramBot(token, { polling: false, baseApiUrl: apiUrl })
     if (!bot) {
-      core.setFailed('Failed to initialize Telegram bot.')
-      return
+      throw Error('Failed to initialize Telegram bot.') 
     }
 
     // --- File sending logic with validation ---
@@ -43,11 +41,6 @@ export async function run(): Promise<void> {
       const media: any[] = []
 
       for (const filePath of documentPaths) {
-        if (!fs.existsSync(filePath)) {
-          core.setFailed(`File not found: ${filePath}`)
-          return
-        }
-
         media.push({
           type: 'document',
           media: filePath
@@ -57,19 +50,18 @@ export async function run(): Promise<void> {
       const lastMedia = media[media.length - 1]
       lastMedia.caption = message
 
-      const fileOptions = {
-        contentType: mimeType,
-      };
+      env.NTBA_FIX_350 = 'true' // Enable MIME auto detect
+
       if (file_count === 1) {
         await bot.sendDocument(chatId, documentPaths[0], {
           caption: message
-        }, fileOptions);
+        });
       } else {
         await bot.sendMediaGroup(chatId, media)
       }
     }
 
-    core.info('Sent files to Telegram successfully.')
+    core.info('Successfully sent files to Telegram.')
   } catch (error) {
     if (error instanceof Error) {
       core.setFailed(error.message)

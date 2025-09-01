@@ -8,7 +8,7 @@
     ".": "./dist/index.cjs"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=24"
   },
   "scripts": {
     "bundle": "npm run package",
@@ -23,19 +23,19 @@
     "node-telegram-bot-api": "^0.66.0"
   },
   "devDependencies": {
-    "@github/local-action": "^5.2.0",
+    "@github/local-action": "^6.0.0",
     "@rollup/plugin-commonjs": "^28.0.6",
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^16.0.1",
     "@rollup/plugin-typescript": "^12.1.4",
-    "@types/node": "^20.19.11",
-    "@types/node-telegram-bot-api": "^0.64.10",
+    "@types/node": "^24.5.2",
+    "@types/node-telegram-bot-api": "^0.64.11",
     "make-coverage-badge": "^1.2.0",
-    "rollup": "^4.50.0",
+    "rollup": "^4.52.0",
     "tsx": "^4.20.5",
     "typescript": "^5.9.2"
   },
   "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "^4.50.0"
+    "@rollup/rollup-linux-x64-gnu": "^4.52.0"
   }
 }

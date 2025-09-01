@@ -22,10 +22,6 @@ through Telegram messages.
 
 **Optional** Custom API URL to use.
 
-### `mime`
-
-**Optional** The MIME type of the files being uploaded (e.g., application/json, image/png).
-
 ## Outputs
 
 None
