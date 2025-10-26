@@ -1,6 +1,6 @@
 import * as core from '@actions/core'
-import TelegramBot from 'node-telegram-bot-api'
-import { env } from 'node:process'
+import { createReadStream } from 'node:fs';
+import { TelegramBot } from 'typescript-telegram-bot-api'
 import { glob } from 'glob'
 
 export async function run(): Promise<void> {
@@ -31,7 +31,7 @@ export async function run(): Promise<void> {
 
     const file_count = documentPaths.length
 
-    const bot = new TelegramBot(token, { polling: false, baseApiUrl: apiUrl })
+    const bot = new TelegramBot({ botToken: token, baseURL: apiUrl || undefined });
     if (!bot) {
       throw Error('Failed to initialize Telegram bot.') 
     }
@@ -43,21 +43,24 @@ export async function run(): Promise<void> {
       for (const filePath of documentPaths) {
         media.push({
           type: 'document',
-          media: filePath
+          media: createReadStream(filePath)
         })
       }
 
       const lastMedia = media[media.length - 1]
-      lastMedia.caption = message
-
-      env.NTBA_FIX_350 = 'true' // Enable MIME auto detect
+      lastMedia.caption = message || undefined
 
       if (file_count === 1) {
-        await bot.sendDocument(chatId, documentPaths[0], {
-          caption: message
-        });
+        await bot.sendDocument({
+          chat_id: chatId,
+          document: media[0].media,
+          caption: message || undefined
+        })
       } else {
-        await bot.sendMediaGroup(chatId, media)
+        await bot.sendMediaGroup({
+          chat_id: chatId,
+          media: media
+        })
       }
     }
 
