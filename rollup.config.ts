@@ -9,8 +9,8 @@ const config = {
   input: 'src/index.ts',
   output: {
     esModule: true,
-    file: 'dist/index.cjs',
-    format: 'cjs',
+    file: 'dist/index.js',
+    format: 'es',
     sourcemap: true
   },
   plugins: [

@@ -43,10 +43,10 @@ jobs:
   upload-to-telegram:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v6
 
     - name: Upload files to Telegram
-      uses: RyogiMutsuki/telegram-files
+      uses: MutsukiC/telegram-files
       with:
         chat-id: 'chat_id'
         body: 'Here are your files!'

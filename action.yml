@@ -1,6 +1,6 @@
 name: Telegram Files Action
 description: Upload files to Telegram using a bot token
-author: nyaruta
+author: MutsukiC
 
 # Add your action's branding here. This will appear on the GitHub Marketplace.
 branding:
@@ -33,4 +33,4 @@ inputs:
 
 runs:
   using: node24
-  main: dist/index.cjs
+  main: dist/index.js
